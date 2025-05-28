@@ -11,6 +11,8 @@ Exception has occurred: Error: Cannot create a string longer than 0x1fffffe8 cha
 ```
 or exactly 512MB. Related [StackOverflow thread here](https://stackoverflow.com/questions/68230031/cannot-create-a-string-longer-than-0x1fffffe8-characters-in-json-parse/68263704#68263704)
 
+![debugger exception](tsgo_buffer_catch.png "debugger exception"). 
+
 ## Project Structure
 
 ```
