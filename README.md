@@ -37,19 +37,22 @@ The png files were created by seeding empty files with these commands.
 - Testing limits:
 	- 10k pdfs, 10k pngs: ~16mb 🚫
 	- ...
-	- 400k pdfs, 400k pngs: ~660mb ✅
+	- 500k pdfs, 500k pngs: ~650mb (654194844 bytes) ✅
+	- This is of course achievable by using longer string names and less files, but who cares this is just for repro.
 - 20k files wasn't nearly enough. 200k was around 160mb, so 800k is surely over 512mb right? 
-   - It's around 660mb of a file stream that causes the crash.
+   - It's around 650mb of a file stream that causes the crash.
 - Putting all 800k imports into one file breaks other things for not clear, but understandable reasons, so it's broken into fake PDFs and fake PNGs
 
 ```bash
+npm i
+
 mkdir files files/pdf files/img
 
-for i in $(seq 1 400000); do : > files/pdf/pdf_${i}.pdf; done
+for i in $(seq 400000 500000); do : > files/pdf/pdf_${i}.pdf; done
 ls files/pdf -1 | wc -l
 node src/generatePdfImports.js 
 
-for i in $(seq 1 400000); do : > files/img/icon_${i}.png; done
+for i in $(seq 400000 500000); do : > files/img/icon_${i}.png; done
 ls files/img -1 | wc -l
 node src/generatePngImports.js 
 ```
@@ -60,6 +63,7 @@ node src/generatePngImports.js
 3. Enable the breakpoint for `Uncaught Exceptions`
 4. In the new vscode debug window, open this repro repo
 5. Open one of the import files (e.g. `src/pdfImports.ts`)
+6. You may hit breakpoints for unrelated exceptions, just continue until you get into `ril.js`
 6. See the error caught reflected in both windows after some time (~10s)
 
 ## The Issue
@@ -88,7 +92,7 @@ First 5,000 of buffer
 		{"globPattern":"/this_repo/files/pdf_1.pdf/index.ts","kind":1},
 		{"globPattern":"/this_repo/files/pdf_1.pdf/index.tsx","kind":1},
 
-		// repeat all these for all the files, 660MB in this case
+		// repeat all these for all the files, 650MB in this case
 		// ...
 ```
 
