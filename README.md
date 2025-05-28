@@ -1,6 +1,6 @@
 # TypeScript-Go LSP Resolution Issue Reproduction
 
-This repository demonstrates a TypeScript path resolution issue when using paths get watched like modules. 
+This repository demonstrates a TypeScript path resolution issue when using paths get watched like modules, when using the latest and greatest [ts-go](https://github.com/microsoft/typescript-go).
 
 ```typescript
 import icon_1 from '../files/img/icon_1.png';
